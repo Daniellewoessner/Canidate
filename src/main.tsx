@@ -24,7 +24,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+], {
+  basename: '/Canidate' // Moved here as part of router options
+});
 
 const rootElement = document.getElementById('root')!;
 ReactDOM.createRoot(rootElement).render(
