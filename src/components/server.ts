@@ -1,6 +1,7 @@
-import express from 'express';
-import path, { dirname } from 'path';
+import express, { Request, Response } from 'express';
+import path from 'path';
 import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -8,9 +9,11 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// Serve static files from the dist directory
 app.use(express.static(path.join(__dirname, '../dist')));
 
-app.get('*', (_req, res) => {
+// Handle client-side routing with proper types
+app.get('*', (_req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
