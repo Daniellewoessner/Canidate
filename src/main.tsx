@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter,RouterProvider } from 'react-router-dom';
 import './index.css';
 
 import App from './App.tsx';
@@ -7,8 +7,7 @@ import CandidateSearch from './pages/CandidateSearch.tsx';
 import SavedCandidates from './pages/SavedCandidates.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import React from 'react';
-
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
@@ -19,13 +18,16 @@ const router = createBrowserRouter([
         element: <CandidateSearch />,
       },
       {
-        path: '/SavedCandidates',
+        path: 'SavedCandidates',
         element: <SavedCandidates />,
       },
     ],
   },
 ], {
-  basename: '/Canidate' 
+  future: {
+    
+    v7_relativeSplatPath: true
+  }
 });
 
 const rootElement = document.getElementById('root')!;
