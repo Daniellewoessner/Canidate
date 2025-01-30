@@ -1,43 +1,55 @@
-const searchGithub = async (p0: string) => {
+import type GitHubUser from '../interfaces/Candidate.interface';
+
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+
+const getHeaders = () => {
+  const headers: Record<string, string> = {
+    'Accept': 'application/vnd.github.v3+json'
+  };
+  
+  if (GITHUB_TOKEN) {
+    headers.Authorization = `Bearer ${GITHUB_TOKEN}`;
+  }
+  
+  return headers;
+};
+
+const searchGithub = async (_query?: string): Promise<GitHubUser[]> => {
   try {
-    const start = Math.floor(Math.random() * 100000000) + 1;
-    // console.log(import.meta.env);
     const response = await fetch(
-      `https://api.github.com/users?since=${start}`,
-      {
-        headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-        },
-      }
+      `https://api.github.com/search/users?q=${_query}`,
+      { headers: getHeaders() }
     );
-    // console.log('Response:', response);
-    const data = await response.json();
+
+    console.log('Status:', response.status);
     if (!response.ok) {
-      throw new Error('invalid API response, check the network tab');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-    // console.log('Data:', data);
-    return data;
-  } catch (err) {
-    // console.log('an error occurred', err);
+    
+    const data = await response.json();
+    return data.items || [];
+  } catch (error) {
+    console.error('Search error:', error);
     return [];
   }
 };
 
-const searchGithubUser = async (username: string) => {
+const searchGithubUser = async (username: string): Promise<GitHubUser | null> => {
   try {
-    const response = await fetch(`https://api.github.com/users/${username}`, {
-      headers: {
-        Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
-      },
-    });
-    const data = await response.json();
+    const response = await fetch(
+      `https://api.github.com/users/${username}`,
+      { headers: getHeaders() }
+    );
+
     if (!response.ok) {
-      throw new Error('invalid API response, check the network tab');
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const data = await response.json();
     return data;
-  } catch (err) {
-    // console.log('an error occurred', err);
-    return {};
+  } catch (error) {
+    console.error('User search failed:', error);
+    return null;
   }
 };
 
