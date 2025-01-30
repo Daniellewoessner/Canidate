@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  base: 'https://github.com/Daniellewoessner/Canidate.git',  
+  base: '/Canidate/', 
   server: {
     port: 3000,
     open: true
@@ -14,8 +14,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         assetFileNames: 'assets/[name].[hash][extname]',
-        chunkFileNames: 'assets/[name].[hash].ts',
-        entryFileNames: 'assets/[name].[hash].ts',
+        chunkFileNames: 'assets/[name].[hash].js',
+        entryFileNames: 'assets/[name].[hash].js',
       }
     },
     assetsInlineLimit: 4096,
