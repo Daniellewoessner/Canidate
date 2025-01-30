@@ -1,12 +1,12 @@
+import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createHashRouter,RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
+import App from './App';
+import ErrorPage from './pages/ErrorPage';
+import CandidateSearch from './pages/CandidateSearch';
+import SavedCandidates from './pages/SavedCandidates';
 import './index.css';
 
-import App from './App.tsx';
-import CandidateSearch from './pages/CandidateSearch.tsx';
-import SavedCandidates from './pages/SavedCandidates.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
-import React from 'react';
 const router = createHashRouter([
   {
     path: '/',
@@ -23,15 +23,9 @@ const router = createHashRouter([
       },
     ],
   },
-], {
-  future: {
-    
-    v7_relativeSplatPath: true
-  }
-});
+]);
 
-const rootElement = document.getElementById('root')!;
-ReactDOM.createRoot(rootElement).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
